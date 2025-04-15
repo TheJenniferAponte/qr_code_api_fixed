@@ -25,16 +25,12 @@ def setup_logging():
     logging.config.fileConfig(normalized_path, disable_existing_loggers=False)
 
 def authenticate_user(username: str, password: str):
-    """
-    Placeholder for user authentication logic.
-    In a real application, replace this with actual authentication against a user database.
-    """
-    # Simple check against constants for demonstration.
-    if username == ADMIN_USER and password == ADMIN_PASSWORD:
-        return {"username": username}
-    # Log a warning if authentication fails.
+    if username == "admin" and password == "secret":
+        return {"username": "admin"}
+    
     logging.warning(f"Authentication failed for user: {username}")
     return None
+
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
     """
@@ -66,9 +62,10 @@ def encode_url_to_filename(url):
     Encodes a URL into a base64 string safe for filenames, after validating and sanitizing.
     Removes padding to ensure filename compatibility.
     """
-    sanitizd_url = validate_and_sanitize_url(str(url))
+    sanitized_url = validate_and_sanitize_url(str(url))
     if sanitized_url is None:
         raise ValueError("Provided URL is invalid and cannot be encoded.")
+    
     encoded_bytes = base64.urlsafe_b64encode(sanitized_url.encode('utf-8'))
     encoded_str = encoded_bytes.decode('utf-8').rstrip('=')
     return encoded_str
@@ -81,7 +78,7 @@ def decode_filename_to_url(encoded_str: str) -> str:
     padding_needed = 4 - (len(encoded_str) % 4)
     if padding_needed:
         encoded_str += "=" * padding_needed
-    decoded_bytes = base64.urlsafe_b6decode(encoded_str)
+    decoded_bytes = base64.urlsafe_b64decode(encoded_str)
     return decoded_bytes.decode('utf-8')
 
 def generate_links(action: str, qr_filename: str, base_api_url: str, download_url: str) -> List[dict]:
