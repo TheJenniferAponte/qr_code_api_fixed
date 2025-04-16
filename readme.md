@@ -35,3 +35,7 @@ You will only get 100 if the entire QR program passes GitHub actions, so you wil
 9. Goto http://localhost/docs to view openapi spec documentation
 10. Click "authorize" input username: admin password: secret
 11. Test making,  retrieving, and deleting QR codes on the spec page.
+
+# QR Code API
+
+✅ Docker login test triggered!
